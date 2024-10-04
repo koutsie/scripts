@@ -11,7 +11,7 @@
 (function() {
     'use strict';
 
-    const keywords = ["rnn", "agi", "chatgpt", "-70b", "-100b", "flux", "ai", "llama", "openai"];
+    const keywords = ["llm", "rnn", "agi", "chatgpt", "-70b", "-100b", "flux", "ai", "llama", "openai"];
 
     const containskeywords = (text) => keywords.some(keyword => text.toLowerCase().includes(keyword));
     const removeelement = (elem) => elem && (elem.style.display = 'none');

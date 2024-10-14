@@ -1,12 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 # cc0
 
 # a horrible horrible script.
 # depends on skdump (aka libatasmart)
 
-
-RED=$(tput setaf 1)
 CYAN=$(tput setaf 39)
 ORANGE=$(tput setaf 214)
 LIGHT_RED=$(tput setaf 9)
@@ -31,8 +29,8 @@ format_output() {
 
 get_disk_info() {
     local disk=$1
-    # should probably check for doas / being root but.. eh
-    local output=$(sudo skdump "$disk" 2>/dev/null)
+    local output
+    output=$(sudo skdump "$disk" 2>/dev/null)
     if [[ -z "$output" ]]; then
         return 1
     fi
@@ -54,7 +52,7 @@ for key in "${order[@]}"; do
 done
 
 # get disk infor for all the disks
-disks=($(lsblk -ndo name | grep -E '^sd|^nvme'))
+mapfile -t disks < <(lsblk -ndo name | grep -E '^sd|^nvme')
 for disk in "${disks[@]}"; do
     readarray -t disk_info < <(get_disk_info "/dev/$disk")
     disk_name="/dev/$disk"

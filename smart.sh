@@ -52,7 +52,11 @@ for key in "${order[@]}"; do
 done
 
 # get disk infor for all the disks
-mapfile -t disks < <(lsblk -ndo name | grep -E '^sd|^nvme')
+# COMMENT: Mon Oct 14 01:14:32 PM EEST 2024
+# There should probably be a better, "more" posix way to do this but
+# i'm fucking lazy and honestly - it works.
+# - kouts
+mapfile -t disks < <(lsblk -ndo name | grep -E '^sd|^nvme|^loop|^sr|^vda')
 for disk in "${disks[@]}"; do
     readarray -t disk_info < <(get_disk_info "/dev/$disk")
     disk_name="/dev/$disk"
